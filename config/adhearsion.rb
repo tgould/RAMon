@@ -35,6 +35,7 @@ Adhearsion.config do |config|
   config.punchblock.password = "r@m0n" # Your AMI password
   config.punchblock.host = "127.0.0.1" # Your AMI host
 
+  config.platform.process_name = "ramon"
   ##
   # Use with FreeSWITCH
   #
