@@ -13,13 +13,14 @@ class Ramon < Adhearsion::CallController
 		"AWWC6"=>{"domainId"=>"/110496", "auth_pw"=>"8662"},
 		"AWWC7"=>{"domainId"=>"/112365", "auth_pw"=>"8663"}
 		}
-		keys = five9domains.keys
-		rec_path	= ''
-		rec_storage = '/var/lib/asterisk/sounds/ramon/'
-	    user        = "test"
-	    password    = "123"
-	    auth     	= ""
-	    pw          = ""
+		keys 			= five9domains.keys
+		rec_path		= ''
+		rec_storage 	= '/var/lib/asterisk/sounds/ramon/'
+	    user        	= "test"
+	    password    	= "123"
+	    auth     		= ""
+	    pw          	= ""
+	    min_rec_size 	= 50000
 
 	    answer
 	    ### Authentication
@@ -62,16 +63,18 @@ class Ramon < Adhearsion::CallController
 			    resp = http.get(file_url, {"Authorization" => basic_str})
 			    in_file_name = rec_storage + index.to_s + 'in.wav'
 			    out_file_name = rec_storage + index.to_s + 'out.wav'
+			    
 			    File.open(in_file_name, 'w') { |f| f.write(resp.body) }
-
-			    if File.size(in_file_name) > 55 then
+		    	fileSize = File.size(in_file_name)
+			    
+			    if fileSize > min_rec_size then
 					convert = "sox " + in_file_name + " -s " + out_file_name
 					system(convert)
 					File.delete(in_file_name)
 				    play 'beep', renderer: :asterisk
-					
 					play rec_storage + index.to_s + "out", renderer: :asterisk
 					sleep 3
+			    else logger.info "File size '#{fileSize} too small.  File Skipped"
 			    end
 			end
 		
