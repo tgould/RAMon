@@ -72,8 +72,21 @@ class Ramon < Adhearsion::CallController
 					system(convert)
 					File.delete(in_file_name)
 				    play 'beep', renderer: :asterisk
-					play rec_storage + index.to_s + "out", renderer: :asterisk
-					sleep 3
+					
+					dtmf = nil
+					begin
+						dtmf = interruptible_play (rec_storage + index.to_s + "out"), renderer: :asterisk
+						if dtmf == '0'
+							throw :done
+						elsif dtmf != '1'
+							break
+						end		
+					end while dtmf == '1'
+					
+					if dtmf.nil?
+						sleep 3
+					end
+			    
 			    else logger.info "File size '#{fileSize} too small.  File Skipped"
 			    end
 			end
