@@ -6,6 +6,7 @@ class Ramon < Adhearsion::CallController
 	    web_uri     = 'https://gears002.scl.five9.com:15000'
 	    five9domains = {
 		"StraightForward"=>{"domainId"=>"/103856", "auth_pw"=>"6714"},
+		"StraightForward2"=>{"domainId"=>"/103810", "auth_pw"=>"6715"},
 		"AWWC2"=>{"domainId"=>"/108106", "auth_pw"=>"2992"},
 		"AWWC3"=>{"domainId"=>"/108461", "auth_pw"=>"2881"},
 		"AWWC4"=>{"domainId"=>"/108737", "auth_pw"=>"2887"},
@@ -26,7 +27,7 @@ class Ramon < Adhearsion::CallController
 	    ### Authentication
 	    while auth != "true" do
 			sleep 1
-			pw = ask 'enter-4-digit-password', limit: 4, renderer: :asterisk
+			pw = ask '#{AHN_ROOT}/prompts/enter-4-digit-password', limit: 4, renderer: :asterisk
 			for key in 0...keys.length
 				if pw.to_s == five9domains[keys[key]]["auth_pw"]
 					rec_path = five9domains[keys[key]]["domainId"]
@@ -35,7 +36,7 @@ class Ramon < Adhearsion::CallController
 				end
 			end
 			if auth != "true"
-				play 'login-incorrect', renderer: :asterisk
+				play '#{AHN_ROOT}/prompts/login-incorrect', renderer: :asterisk
 			end
 		end
 
@@ -91,10 +92,10 @@ class Ramon < Adhearsion::CallController
 			    end
 			end
 		
-			play 'vm-nomore', renderer: :asterisk
+			play '#{AHN_ROOT}/prompts/no-more-sessions', renderer: :asterisk
 	    end
 	    
-	    play 'goodbye', renderer: :asterisk
+	    play '#{AHN_ROOT}/prompts/goodbye', renderer: :asterisk
     end
 
 end
