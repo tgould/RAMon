@@ -5,8 +5,8 @@ class Ramon < Adhearsion::CallController
 	    file_links  = []
 	    web_uri     = 'https://gears002.scl.five9.com:15000'
 	    five9domains = {
-		"StraightForward"=>{"domainId"=>"/103856", "auth_pw"=>"6714"},
-		"StraightForward2"=>{"domainId"=>"/103810", "auth_pw"=>"6715"},
+		"StraightForward"=>{"domainId"=>"/103810", "auth_pw"=>"6714"},
+		"StraightForward2"=>{"domainId"=>"/103899", "auth_pw"=>"6715"},
 		"AWWC2"=>{"domainId"=>"/108106", "auth_pw"=>"2992"},
 		"AWWC3"=>{"domainId"=>"/108461", "auth_pw"=>"2881"},
 		"AWWC4"=>{"domainId"=>"/108737", "auth_pw"=>"2887"},
